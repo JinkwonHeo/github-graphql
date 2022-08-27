@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { SetStateAction, Dispatch, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { debounce } from 'lodash';
 
-function Search() {
-  const [searchedWord, setSearchedWord] = useState<string>('');
-
+function Search({
+  searchedWord,
+  setSearchedWord,
+}: {
+  searchedWord: string;
+  setSearchedWord: Dispatch<SetStateAction<string>>;
+}) {
   const navigate = useNavigate();
 
-  const handleChange = (e: React.BaseSyntheticEvent) => {
+  const handleChange = debounce((e: React.BaseSyntheticEvent) => {
     e.persist();
-
-    const word = e.currentTarget.value;
-    setSearchedWord(word);
-  };
+    setSearchedWord(e.target.value);
+  }, 250);
 
   const handleSubmit = (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
@@ -23,7 +26,7 @@ function Search() {
       <form onSubmit={handleSubmit}>
         <div>this is Search component</div>
         <input
-          id="searchedWord"
+          id="input"
           type="text"
           onChange={handleChange}
           autoComplete="off"

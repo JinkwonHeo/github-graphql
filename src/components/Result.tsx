@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, SetStateAction, Dispatch } from 'react';
 import styled from 'styled-components';
 import { useLazyLoadQuery } from 'react-relay';
 import { graphql } from 'babel-plugin-relay/macro';
@@ -7,16 +7,25 @@ function Result({
   refetch,
   queryArgs,
   setCursor,
+  searchedWord,
 }: {
   refetch: any;
-  queryArgs: any;
-  setCursor: any;
+  queryArgs: {
+    options: {
+      fetchKey: number;
+    };
+    variables: {
+      endCursor: string;
+    };
+  };
+  setCursor: Dispatch<SetStateAction<string>>;
+  searchedWord: string;
 }) {
   const [searchedLists, setSearchedLists] = useState<any[]>([]);
   const data: any = useLazyLoadQuery(
     graphql`
-      query ResultQuery($endCursor: String) {
-        search(query: "react", first: 5, after: $endCursor, type: REPOSITORY) {
+      query ResultQuery($endCursor: String, $searchedWord: String!) {
+        search(query: $searchedWord, first: 5, after: $endCursor, type: REPOSITORY) {
           repositoryCount
           edges {
             node {
@@ -57,7 +66,11 @@ function Result({
           </RepositoryElementContainer>
         </Fragment>
       ))}
-      {data.search.pageInfo.hasNextPage ? <button onClick={() => refetch()}>더보기</button> : null}
+      {data.search.pageInfo.hasNextPage ? (
+        <button onClick={() => refetch()}>더보기</button>
+      ) : (
+        'End of list'
+      )}
     </div>
   );
 }

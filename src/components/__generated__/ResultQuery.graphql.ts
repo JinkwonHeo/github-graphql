@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8574e4a9f2c027fe7656442754ff5384>>
+ * @generated SignedSource<<62fdbfca83d40e10c6cfc6b116156f2b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type ResultQuery$variables = {
   endCursor?: string | null;
+  searchedWord: string;
 };
 export type ResultQuery$data = {
   readonly search: {
@@ -41,6 +42,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "endCursor"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "searchedWord"
   }
 ],
 v1 = [
@@ -55,9 +61,9 @@ v1 = [
     "value": 5
   },
   {
-    "kind": "Literal",
+    "kind": "Variable",
     "name": "query",
-    "value": "react"
+    "variableName": "searchedWord"
   },
   {
     "kind": "Literal",
@@ -249,16 +255,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8f9312fbad090ace4de61e44127c5fdb",
+    "cacheID": "3876b6718fd724f03415dbea1af8c3d0",
     "id": null,
     "metadata": {},
     "name": "ResultQuery",
     "operationKind": "query",
-    "text": "query ResultQuery(\n  $endCursor: String\n) {\n  search(query: \"react\", first: 5, after: $endCursor, type: REPOSITORY) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          id\n          name\n          description\n          stargazerCount\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ResultQuery(\n  $endCursor: String\n  $searchedWord: String!\n) {\n  search(query: $searchedWord, first: 5, after: $endCursor, type: REPOSITORY) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          id\n          name\n          description\n          stargazerCount\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a2e457b9d6082f84c02a32f5c8053888";
+(node as any).hash = "1efe5209def9e549964f7df4e0bae1c5";
 
 export default node;
