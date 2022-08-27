@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<198d938554e160a9b6692eee167d6bfc>>
+ * @generated SignedSource<<8574e4a9f2c027fe7656442754ff5384>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,8 +9,10 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type AppRepositoryListQuery$variables = {};
-export type AppRepositoryListQuery$data = {
+export type ResultQuery$variables = {
+  endCursor?: string | null;
+};
+export type ResultQuery$data = {
   readonly search: {
     readonly edges: ReadonlyArray<{
       readonly cursor: string;
@@ -28,13 +30,25 @@ export type AppRepositoryListQuery$data = {
     readonly repositoryCount: number;
   };
 };
-export type AppRepositoryListQuery = {
-  response: AppRepositoryListQuery$data;
-  variables: AppRepositoryListQuery$variables;
+export type ResultQuery = {
+  response: ResultQuery$data;
+  variables: ResultQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "endCursor"
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "endCursor"
+  },
   {
     "kind": "Literal",
     "name": "first",
@@ -51,24 +65,24 @@ var v0 = [
     "value": "REPOSITORY"
   }
 ],
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "repositoryCount",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "kind": "InlineFragment",
   "selections": [
-    (v2/*: any*/),
+    (v3/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -94,14 +108,14 @@ v3 = {
   "type": "Repository",
   "abstractKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -128,20 +142,20 @@ v5 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "AppRepositoryListQuery",
+    "name": "ResultQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "SearchResultItemConnection",
         "kind": "LinkedField",
         "name": "search",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -158,17 +172,17 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v6/*: any*/)
         ],
-        "storageKey": "search(first:5,query:\"react\",type:\"REPOSITORY\")"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -176,19 +190,19 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "AppRepositoryListQuery",
+    "name": "ResultQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "SearchResultItemConnection",
         "kind": "LinkedField",
         "name": "search",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -212,11 +226,11 @@ return {
                     "name": "__typename",
                     "storageKey": null
                   },
-                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v2/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "type": "Node",
                     "abstractKey": "__isNode"
@@ -224,27 +238,27 @@ return {
                 ],
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v6/*: any*/)
         ],
-        "storageKey": "search(first:5,query:\"react\",type:\"REPOSITORY\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "5ae860b0e8fc4aa8734bc2ad4b6198d6",
+    "cacheID": "8f9312fbad090ace4de61e44127c5fdb",
     "id": null,
     "metadata": {},
-    "name": "AppRepositoryListQuery",
+    "name": "ResultQuery",
     "operationKind": "query",
-    "text": "query AppRepositoryListQuery {\n  search(query: \"react\", first: 5, type: REPOSITORY) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          id\n          name\n          description\n          stargazerCount\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ResultQuery(\n  $endCursor: String\n) {\n  search(query: \"react\", first: 5, after: $endCursor, type: REPOSITORY) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          id\n          name\n          description\n          stargazerCount\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e4b0c37a1662d5b21d016f626a08cb62";
+(node as any).hash = "a2e457b9d6082f84c02a32f5c8053888";
 
 export default node;
