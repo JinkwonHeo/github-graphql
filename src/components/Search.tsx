@@ -5,9 +5,11 @@ import { debounce } from 'lodash';
 function Search({
   searchedWord,
   setSearchedWord,
+  setQueryArgs,
 }: {
   searchedWord: string;
   setSearchedWord: Dispatch<SetStateAction<string>>;
+  setQueryArgs: Dispatch<SetStateAction<any>>;
 }) {
   const navigate = useNavigate();
 
@@ -18,13 +20,18 @@ function Search({
 
   const handleSubmit = (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
+    setQueryArgs({
+      options: {
+        fetchKey: 0,
+      },
+      variables: { endCursor: undefined, searchedWord },
+    });
     navigate(`/result/${searchedWord}`);
   };
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div>this is Search component</div>
         <input
           id="input"
           type="text"
@@ -32,7 +39,7 @@ function Search({
           autoComplete="off"
           autoCapitalize="off"
         />
-        <button>to result component</button>
+        <button>Search</button>
       </form>
     </>
   );
