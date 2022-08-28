@@ -7,7 +7,6 @@ function Result({
   refetch,
   queryArgs,
   setCursor,
-  searchedWord,
 }: {
   refetch: any;
   queryArgs: {
@@ -19,7 +18,6 @@ function Result({
     };
   };
   setCursor: Dispatch<SetStateAction<string>>;
-  searchedWord: string;
 }) {
   const [searchedLists, setSearchedLists] = useState<any[]>([]);
   const data: any = useLazyLoadQuery(
@@ -67,7 +65,7 @@ function Result({
         </Fragment>
       ))}
       {data.search.pageInfo.hasNextPage ? (
-        <button onClick={() => refetch()}>더보기</button>
+        <button onClick={() => refetch()}>더 보기</button>
       ) : (
         'End of list'
       )}

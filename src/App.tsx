@@ -17,11 +17,11 @@ function App() {
   useEffect(() => {
     setQueryArgs((prev) => ({
       options: {
-        fetchKey: (prev?.options.fetchKey ?? 0) + 1,
+        fetchKey: prev?.options.fetchKey ?? 0,
       },
       variables: { endCursor: cursor, searchedWord },
     }));
-  }, [searchedWord]);
+  }, []);
 
   const refetch = useCallback(() => {
     setQueryArgs((prev) => ({
@@ -30,25 +30,24 @@ function App() {
       },
       variables: { endCursor: cursor, searchedWord },
     }));
-  }, [queryArgs.options.fetchKey, cursor]);
+  }, [cursor]);
 
   return (
     <>
       <Routes>
         <Route
           path="/"
-          element={<Search searchedWord={searchedWord} setSearchedWord={setSearchedWord} />}
+          element={
+            <Search
+              searchedWord={searchedWord}
+              setSearchedWord={setSearchedWord}
+              setQueryArgs={setQueryArgs}
+            />
+          }
         />
         <Route
           path="/result/:searchedWord"
-          element={
-            <Result
-              refetch={refetch}
-              queryArgs={queryArgs}
-              setCursor={setCursor}
-              searchedWord={searchedWord}
-            />
-          }
+          element={<Result refetch={refetch} queryArgs={queryArgs} setCursor={setCursor} />}
         />
       </Routes>
     </>
