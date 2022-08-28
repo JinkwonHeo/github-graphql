@@ -47,7 +47,11 @@ function App() {
         />
         <Route
           path="/result/:searchedWord"
-          element={<Result refetch={refetch} queryArgs={queryArgs} setCursor={setCursor} />}
+          element={
+            <Suspense fallback={'...loading'}>
+              <Result refetch={refetch} queryArgs={queryArgs} setCursor={setCursor} />
+            </Suspense>
+          }
         />
       </Routes>
     </>
@@ -57,9 +61,7 @@ function App() {
 function AppRoot() {
   return (
     <RelayEnvironmentProvider environment={RelayEnvironment}>
-      <Suspense fallback={'Loading...'}>
-        <App />
-      </Suspense>
+      <App />
     </RelayEnvironmentProvider>
   );
 }
