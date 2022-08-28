@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect, SetStateAction, Dispatch } from 'react';
 import styled from 'styled-components';
-import { useLazyLoadQuery } from 'react-relay';
+import { useLazyLoadQuery, useMutation } from 'react-relay';
 import { graphql } from 'babel-plugin-relay/macro';
 
 function Result({
@@ -15,11 +15,11 @@ function Result({
     };
     variables: {
       endCursor: string;
+      searchedWord: string;
     };
   };
   setCursor: Dispatch<SetStateAction<string>>;
 }) {
-  const [searchedLists, setSearchedLists] = useState<any[]>([]);
   const data: any = useLazyLoadQuery(
     graphql`
       query ResultQuery($endCursor: String, $searchedWord: String!) {
@@ -32,6 +32,7 @@ function Result({
                 name
                 description
                 stargazerCount
+                viewerHasStarred
               }
             }
             cursor
@@ -47,20 +48,72 @@ function Result({
     queryArgs.options
   );
 
+  const [addStarMutation, isAddStarMutationInFlight] = useMutation(
+    graphql`
+      mutation ResultAddStarMutation($starrableId: ID!) {
+        addStar(input: { starrableId: $starrableId }) {
+          starrable {
+            id
+            stargazerCount
+            ... on Repository {
+              id
+            }
+            viewerHasStarred
+          }
+        }
+      }
+    `
+  );
+
+  const [removeStarMutation] = useMutation(
+    graphql`
+      mutation ResultRemoveStarMutation($starrableId: ID!) {
+        removeStar(input: { starrableId: $starrableId }) {
+          starrable {
+            id
+            stargazerCount
+            viewerHasStarred
+          }
+        }
+      }
+    `
+  );
+
   useEffect(() => {
     setCursor(data.search.pageInfo.endCursor);
-    setSearchedLists((prev) => prev.concat(...data.search.edges));
   }, [queryArgs.options.fetchKey]);
+
+  const handleMutationStar = (id: string, hasStarred: boolean) => {
+    if (hasStarred) {
+      removeStarMutation({
+        variables: {
+          starrableId: id,
+        },
+      });
+    } else {
+      addStarMutation({
+        variables: {
+          starrableId: id,
+        },
+      });
+    }
+  };
 
   return (
     <div>
       <div>Total result: {data.search.repositoryCount}</div>
-      {searchedLists.map((item: any) => (
+      {data.search?.edges.map((item: any) => (
         <Fragment key={item?.node?.id}>
           <RepositoryElementContainer>
             <div>{item?.node?.name}</div>
             <div>{item?.node?.description}</div>
-            <div>{item?.node?.stargazerCount}</div>
+            <div>starred?: {item?.node?.viewerHasStarred ? 'yes' : 'no'}</div>
+            <button
+              disabled={isAddStarMutationInFlight}
+              onClick={() => handleMutationStar(item.node.id, item?.node?.viewerHasStarred)}
+            >
+              {item?.node?.stargazerCount}
+            </button>
           </RepositoryElementContainer>
         </Fragment>
       ))}

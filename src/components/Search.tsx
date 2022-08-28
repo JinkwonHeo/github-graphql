@@ -1,4 +1,4 @@
-import React, { SetStateAction, Dispatch, useState } from 'react';
+import React, { SetStateAction, Dispatch } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from 'lodash';
 
@@ -14,9 +14,8 @@ function Search({
   const navigate = useNavigate();
 
   const handleChange = debounce((e: React.BaseSyntheticEvent) => {
-    e.persist();
     setSearchedWord(e.target.value);
-  }, 250);
+  }, 200);
 
   const handleSubmit = (e: React.BaseSyntheticEvent) => {
     e.preventDefault();

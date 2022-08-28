@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<62fdbfca83d40e10c6cfc6b116156f2b>>
+ * @generated SignedSource<<6f35bba117efab1afb9f884e5b4da3f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type ResultQuery$data = {
         readonly id?: string;
         readonly name?: string;
         readonly stargazerCount?: number;
+        readonly viewerHasStarred?: boolean;
       } | null;
     } | null> | null;
     readonly pageInfo: {
@@ -108,6 +109,13 @@ v4 = {
       "args": null,
       "kind": "ScalarField",
       "name": "stargazerCount",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "viewerHasStarred",
       "storageKey": null
     }
   ],
@@ -255,16 +263,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3876b6718fd724f03415dbea1af8c3d0",
+    "cacheID": "f9e3abe08171240f812e82f93d0c1ce0",
     "id": null,
     "metadata": {},
     "name": "ResultQuery",
     "operationKind": "query",
-    "text": "query ResultQuery(\n  $endCursor: String\n  $searchedWord: String!\n) {\n  search(query: $searchedWord, first: 5, after: $endCursor, type: REPOSITORY) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          id\n          name\n          description\n          stargazerCount\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ResultQuery(\n  $endCursor: String\n  $searchedWord: String!\n) {\n  search(query: $searchedWord, first: 5, after: $endCursor, type: REPOSITORY) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          id\n          name\n          description\n          stargazerCount\n          viewerHasStarred\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1efe5209def9e549964f7df4e0bae1c5";
+(node as any).hash = "6efd121d3cd3a5c9cb9fc2fc5b3c6617";
 
 export default node;
