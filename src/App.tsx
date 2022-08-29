@@ -11,43 +11,14 @@ import { Oval } from 'react-loader-spinner';
 import theme from './style/theme';
 
 function App() {
-  const [cursor, setCursor] = useState<any>(undefined);
   const [searchedWord, setSearchedWord] = useState<string>('');
-  const [queryArgs, setQueryArgs] = useState({
-    options: { fetchKey: 0 },
-    variables: { endCursor: cursor, searchedWord },
-  });
-
-  useEffect(() => {
-    setQueryArgs((prev) => ({
-      options: {
-        fetchKey: prev?.options.fetchKey ?? 0,
-      },
-      variables: { endCursor: cursor, searchedWord },
-    }));
-  }, []);
-
-  const refetch = useCallback(() => {
-    setQueryArgs((prev) => ({
-      options: {
-        fetchKey: (prev?.options.fetchKey ?? 0) + 1,
-      },
-      variables: { endCursor: cursor, searchedWord },
-    }));
-  }, [cursor]);
 
   return (
     <>
       <Routes>
         <Route
           path="/"
-          element={
-            <Search
-              searchedWord={searchedWord}
-              setSearchedWord={setSearchedWord}
-              setQueryArgs={setQueryArgs}
-            />
-          }
+          element={<Search searchedWord={searchedWord} setSearchedWord={setSearchedWord} />}
         />
         <Route
           path="/result/:searchedWord"
@@ -56,8 +27,8 @@ function App() {
               fallback={
                 <LoaderWrapper>
                   <Oval
-                    height={60}
-                    width={60}
+                    height={70}
+                    width={70}
                     color="#3cb46e"
                     visible={true}
                     ariaLabel="oval-loading"
@@ -68,7 +39,7 @@ function App() {
                 </LoaderWrapper>
               }
             >
-              <Result refetch={refetch} queryArgs={queryArgs} setCursor={setCursor} />
+              <Result searchedWord={searchedWord} />
             </Suspense>
           }
         />
