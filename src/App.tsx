@@ -1,12 +1,13 @@
 import React, { Suspense, useState, useCallback, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
-import styled, { ThemeProvider } from 'styled-components';
-import { Oval } from 'react-loader-spinner';
+import RelayEnvironment from './config/RelayEnvironment';
 
-import RelayEnvironment from './RelayEnvironment';
 import Search from './components/Search';
 import Result from './components/Result';
+
+import styled, { ThemeProvider } from 'styled-components';
+import { Oval } from 'react-loader-spinner';
 import theme from './style/theme';
 
 function App() {

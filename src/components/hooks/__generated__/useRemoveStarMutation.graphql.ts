@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4decc2a9a671cb8a787029741494a931>>
+ * @generated SignedSource<<0abe46d489a22ae45e0304b9ac923d31>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,10 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type ResultRemoveStarMutation$variables = {
+export type useRemoveStarMutation$variables = {
   starrableId: string;
 };
-export type ResultRemoveStarMutation$data = {
+export type useRemoveStarMutation$data = {
   readonly removeStar: {
     readonly starrable: {
       readonly id: string;
@@ -21,9 +21,9 @@ export type ResultRemoveStarMutation$data = {
     } | null;
   } | null;
 };
-export type ResultRemoveStarMutation = {
-  response: ResultRemoveStarMutation$data;
-  variables: ResultRemoveStarMutation$variables;
+export type useRemoveStarMutation = {
+  response: useRemoveStarMutation$data;
+  variables: useRemoveStarMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -73,7 +73,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ResultRemoveStarMutation",
+    "name": "useRemoveStarMutation",
     "selections": [
       {
         "alias": null,
@@ -108,7 +108,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ResultRemoveStarMutation",
+    "name": "useRemoveStarMutation",
     "selections": [
       {
         "alias": null,
@@ -145,16 +145,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a3fea0b449c206147e52d445b1640a91",
+    "cacheID": "f41b230cd16b63fc33b6c333391d6db5",
     "id": null,
     "metadata": {},
-    "name": "ResultRemoveStarMutation",
+    "name": "useRemoveStarMutation",
     "operationKind": "mutation",
-    "text": "mutation ResultRemoveStarMutation(\n  $starrableId: ID!\n) {\n  removeStar(input: {starrableId: $starrableId}) {\n    starrable {\n      __typename\n      id\n      stargazerCount\n      viewerHasStarred\n    }\n  }\n}\n"
+    "text": "mutation useRemoveStarMutation(\n  $starrableId: ID!\n) {\n  removeStar(input: {starrableId: $starrableId}) {\n    starrable {\n      __typename\n      id\n      stargazerCount\n      viewerHasStarred\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "81a574a9b8c664a63808d5b00be71635";
+(node as any).hash = "15e4b1139d2cf201713e71fa305a6fcc";
 
 export default node;

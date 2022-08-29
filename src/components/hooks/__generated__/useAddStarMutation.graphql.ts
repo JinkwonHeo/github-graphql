@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa189fdd09d9ab7b976ebfdf7514eb52>>
+ * @generated SignedSource<<08e9ac30b3206ba0c555a5ed6a60e410>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,10 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type ResultAddStarMutation$variables = {
+export type useAddStarMutation$variables = {
   starrableId: string;
 };
-export type ResultAddStarMutation$data = {
+export type useAddStarMutation$data = {
   readonly addStar: {
     readonly starrable: {
       readonly id: string;
@@ -21,9 +21,9 @@ export type ResultAddStarMutation$data = {
     } | null;
   } | null;
 };
-export type ResultAddStarMutation = {
-  response: ResultAddStarMutation$data;
-  variables: ResultAddStarMutation$variables;
+export type useAddStarMutation = {
+  response: useAddStarMutation$data;
+  variables: useAddStarMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -73,7 +73,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ResultAddStarMutation",
+    "name": "useAddStarMutation",
     "selections": [
       {
         "alias": null,
@@ -108,7 +108,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ResultAddStarMutation",
+    "name": "useAddStarMutation",
     "selections": [
       {
         "alias": null,
@@ -145,16 +145,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b7a842e4090a623e6cacac2cec3be0ca",
+    "cacheID": "c56157f3ea46062211dabc74cc1be940",
     "id": null,
     "metadata": {},
-    "name": "ResultAddStarMutation",
+    "name": "useAddStarMutation",
     "operationKind": "mutation",
-    "text": "mutation ResultAddStarMutation(\n  $starrableId: ID!\n) {\n  addStar(input: {starrableId: $starrableId}) {\n    starrable {\n      __typename\n      id\n      stargazerCount\n      ... on Repository {\n        id\n      }\n      viewerHasStarred\n    }\n  }\n}\n"
+    "text": "mutation useAddStarMutation(\n  $starrableId: ID!\n) {\n  addStar(input: {starrableId: $starrableId}) {\n    starrable {\n      __typename\n      id\n      stargazerCount\n      ... on Repository {\n        id\n      }\n      viewerHasStarred\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "074aebdff024a17fe78c09d0e43a3b3e";
+(node as any).hash = "38baddaa6d8c61e73f90a149b143f7a8";
 
 export default node;
