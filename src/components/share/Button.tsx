@@ -7,6 +7,7 @@ export const Button = styled.button`
   background-color: transparent;
   border-width: 1px;
   border-radius: 3px;
+  border-color: #e9e9e9;
   font-size: 1rem;
   transition-duration: 0.4s;
   &:hover {

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, SetStateAction, Dispatch } from 'react';
+import React, { Fragment } from 'react';
 import { useLazyLoadQuery, usePaginationFragment } from 'react-relay';
 import { useNavigate } from 'react-router-dom';
 import { graphql } from 'babel-plugin-relay/macro';
@@ -6,10 +6,11 @@ import { graphql } from 'babel-plugin-relay/macro';
 import useAddStarMutation from './hooks/useAddStarMutation';
 import useRemoveStarMutation from './hooks/useRemoveStarMutation';
 
+import ScrollToTop from './ToTopButton';
 import { Button } from './share/Button';
 import styled from 'styled-components';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import ScrollToTop from './ToTopButton';
+import { Oval } from 'react-loader-spinner';
 
 function Result({ searchedWord }: { searchedWord: string }) {
   const [addStarMutation, isAddStarMutationInFlight] = useAddStarMutation();
@@ -25,7 +26,7 @@ function Result({ searchedWord }: { searchedWord: string }) {
     { searchedWord }
   );
 
-  const { data, loadNext, loadPrevious, hasNext } = usePaginationFragment(
+  const { data, loadNext, isLoadingNext } = usePaginationFragment(
     graphql`
       fragment Result_result on Query
       @argumentDefinitions(
@@ -114,7 +115,22 @@ function Result({ searchedWord }: { searchedWord: string }) {
         </ResultItemContainer>
         {data.search.pageInfo.hasNextPage ? (
           <>
-            <MoreButton onClick={() => loadNext(5)}>더 보기</MoreButton>
+            {isLoadingNext ? (
+              <LoaderWrapper>
+                <Oval
+                  height={30}
+                  width={30}
+                  color="#3cb46e"
+                  visible={true}
+                  ariaLabel="oval-loading"
+                  secondaryColor="#3cb46e"
+                  strokeWidth={5}
+                  strokeWidthSecondary={5}
+                />
+              </LoaderWrapper>
+            ) : (
+              <MoreButton onClick={() => loadNext(5)}>더 보기</MoreButton>
+            )}
           </>
         ) : (
           'End of list'
@@ -173,5 +189,9 @@ const RepositoryDescription = styled.div`
 const RepositoryStarButton = styled(Button)``;
 const MainPageButton = styled(Button)``;
 const MoreButton = styled(Button)`
+  margin-bottom: 2rem;
+`;
+
+const LoaderWrapper = styled.div`
   margin-bottom: 2rem;
 `;
