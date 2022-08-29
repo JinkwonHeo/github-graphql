@@ -1,7 +1,10 @@
 import React, { Fragment, useEffect, SetStateAction, Dispatch } from 'react';
-import { useLazyLoadQuery, useMutation } from 'react-relay';
+import { useLazyLoadQuery } from 'react-relay';
 import { useNavigate } from 'react-router-dom';
 import { graphql } from 'babel-plugin-relay/macro';
+
+import useAddStarMutation from './hooks/useAddStarMutation';
+import useRemoveStarMutation from './hooks/useRemoveStarMutation';
 
 import { Button } from './share/Button';
 import styled from 'styled-components';
@@ -24,7 +27,10 @@ function Result({
   };
   setCursor: Dispatch<SetStateAction<string>>;
 }) {
+  const [addStarMutation, isAddStarMutationInFlight] = useAddStarMutation();
+  const [removeStarMutation, isRemoveStarMutationInFlight] = useRemoveStarMutation();
   const navigate = useNavigate();
+
   const data: any = useLazyLoadQuery(
     graphql`
       query ResultQuery($endCursor: String, $searchedWord: String!) {
@@ -51,37 +57,6 @@ function Result({
     `,
     queryArgs.variables,
     queryArgs.options
-  );
-
-  const [addStarMutation, isAddStarMutationInFlight] = useMutation(
-    graphql`
-      mutation ResultAddStarMutation($starrableId: ID!) {
-        addStar(input: { starrableId: $starrableId }) {
-          starrable {
-            id
-            stargazerCount
-            ... on Repository {
-              id
-            }
-            viewerHasStarred
-          }
-        }
-      }
-    `
-  );
-
-  const [removeStarMutation, isRemoveStarMutationInFlight] = useMutation(
-    graphql`
-      mutation ResultRemoveStarMutation($starrableId: ID!) {
-        removeStar(input: { starrableId: $starrableId }) {
-          starrable {
-            id
-            stargazerCount
-            viewerHasStarred
-          }
-        }
-      }
-    `
   );
 
   useEffect(() => {
@@ -112,7 +87,7 @@ function Result({
     <ResultContainer>
       <ResultHeader>
         <RepositoryTotalCount>Total result: {data.search.repositoryCount}</RepositoryTotalCount>
-        <MoreButton onClick={handleNavigateToMainPage}>첫 화면으로 돌아가기</MoreButton>
+        <MoreButton onClick={handleNavigateToMainPage}>처음 화면으로 돌아가기</MoreButton>
       </ResultHeader>
       <ResultItemContainer>
         {data.search?.edges.map((item: any) => (
