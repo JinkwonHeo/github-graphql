@@ -7,26 +7,18 @@ import githubImage from './assets/github_graphql.png';
 function Search({
   searchedWord,
   setSearchedWord,
-  setQueryArgs,
 }: {
   searchedWord: string;
   setSearchedWord: Dispatch<SetStateAction<string>>;
-  setQueryArgs: Dispatch<SetStateAction<any>>;
 }) {
   const navigate = useNavigate();
 
   const handleChange = debounce((e: React.BaseSyntheticEvent) => {
     setSearchedWord(e.target.value);
-  }, 100);
+  }, 200);
 
   const handleSubmit = (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
-    setQueryArgs({
-      options: {
-        fetchKey: 0,
-      },
-      variables: { endCursor: undefined, searchedWord },
-    });
     navigate(`/result/${searchedWord}`);
   };
 
@@ -76,6 +68,10 @@ const SearchInput = styled.input`
   width: 15rem;
   padding: 0.7rem;
   font-size: 1rem;
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.green};
+    outline: none;
+  }
 `;
 
 const Button = styled.button`

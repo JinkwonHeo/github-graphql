@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a793c9a1fbcdc1ce74d263e76d2a991>>
+ * @generated SignedSource<<dddb504a93fdd1b6ef52ba4b9efc796e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ResultQuery$variables = {
+export type ResultPaginationQuery$variables = {
+  after?: string | null;
+  first?: number | null;
   searchedWord: string;
 };
-export type ResultQuery$data = {
+export type ResultPaginationQuery$data = {
   readonly " $fragmentSpreads": FragmentRefs<"Result_result">;
 };
-export type ResultQuery = {
-  response: ResultQuery$data;
-  variables: ResultQuery$variables;
+export type ResultPaginationQuery = {
+  response: ResultPaginationQuery$data;
+  variables: ResultPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -26,15 +28,32 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
+    "name": "after"
+  },
+  {
+    "defaultValue": 5,
+    "kind": "LocalArgument",
+    "name": "first"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
     "name": "searchedWord"
   }
 ],
-v1 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 5
-  },
+v1 = {
+  "kind": "Variable",
+  "name": "after",
+  "variableName": "after"
+},
+v2 = {
+  "kind": "Variable",
+  "name": "first",
+  "variableName": "first"
+},
+v3 = [
+  (v1/*: any*/),
+  (v2/*: any*/),
   {
     "kind": "Variable",
     "name": "query",
@@ -46,7 +65,7 @@ v1 = [
     "value": "REPOSITORY"
   }
 ],
-v2 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -58,10 +77,12 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ResultQuery",
+    "name": "ResultPaginationQuery",
     "selections": [
       {
         "args": [
+          (v1/*: any*/),
+          (v2/*: any*/),
           {
             "kind": "Variable",
             "name": "searchedWord",
@@ -79,11 +100,11 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ResultQuery",
+    "name": "ResultPaginationQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "SearchResultItemConnection",
         "kind": "LinkedField",
         "name": "search",
@@ -122,7 +143,7 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v2/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -158,7 +179,7 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v2/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "type": "Node",
                     "abstractKey": "__isNode"
@@ -206,7 +227,7 @@ return {
       },
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "filters": [
           "query",
           "type"
@@ -219,16 +240,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "702b64bc6dfdfc0e16d5e4a87f93a28e",
+    "cacheID": "41aadb537d00c4feb50aaeac1983bf6c",
     "id": null,
     "metadata": {},
-    "name": "ResultQuery",
+    "name": "ResultPaginationQuery",
     "operationKind": "query",
-    "text": "query ResultQuery(\n  $searchedWord: String!\n) {\n  ...Result_result_orFA\n}\n\nfragment Result_result_orFA on Query {\n  search(query: $searchedWord, first: 5, type: REPOSITORY) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          id\n          name\n          description\n          stargazerCount\n          viewerHasStarred\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ResultPaginationQuery(\n  $after: String\n  $first: Int = 5\n  $searchedWord: String!\n) {\n  ...Result_result_1rkBg0\n}\n\nfragment Result_result_1rkBg0 on Query {\n  search(query: $searchedWord, first: $first, after: $after, type: REPOSITORY) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          id\n          name\n          description\n          stargazerCount\n          viewerHasStarred\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a509d7edd4ec3f535bbcc2d8be73a4ea";
+(node as any).hash = "47e0ff873adcb28e9ae464c3a9fa7198";
 
 export default node;
