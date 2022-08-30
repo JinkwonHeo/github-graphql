@@ -46,6 +46,7 @@ Relay를 이용한 GitHub GraphQL API Query 프로젝트
 - 마음에 드는 레포지토리 addStar/removeStar 기능 (즐겨찾기)
 - 맨 위로 가기 버튼
 - 휴대폰 사용자를 위한 반응형 UI
+- 레포지토리의 설명을 클릭하면 해당 레포지토리 링크로 이동
 
 <br>
 
