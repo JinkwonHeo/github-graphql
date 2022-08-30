@@ -20,15 +20,19 @@ Relay를 이용한 GitHub GraphQL API Query 프로젝트
    ```
    git clone https://github.com/JinkwonHeo/github-graphql.git
    ```
-3. 프로젝트의 루트폴더에 .env.local 파일을 만든 후 발급받은 GitHub access token을 다음과 같이 환경변수로 설정해줍니다.
+3. 프로젝트 폴더로 이동합니다.
+   ```
+   cd github-graphql
+   ```
+4. 프로젝트의 루트폴더에 .env.local 파일을 만든 후 발급받은 GitHub access token을 다음과 같이 환경변수로 설정해줍니다.
    ```
    REACT_APP_GITHUB_AUTH_TOKEN=<Your GitHub personal access token>
    ```
-4. 프로젝트 폴더로 이동 후 yarn을 입력하여 설치합니다.
+5. 프로젝트 폴더로 이동 후 yarn을 입력하여 설치합니다.
    ```
    yarn
    ```
-5. yarn start를 입력하여 프로젝트를 실행합니다.
+6. yarn start를 입력하여 프로젝트를 실행합니다.
    ```
    yarn start
    ```
