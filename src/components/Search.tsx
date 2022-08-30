@@ -37,7 +37,7 @@ function Search({
               autoCapitalize="off"
             />
           </InputWrapper>
-          <Button>Search</Button>
+          <Button disabled={!searchedWord.length}>Search</Button>
         </SearchForm>
       </Container>
     </>

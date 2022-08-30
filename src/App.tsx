@@ -39,7 +39,7 @@ function App() {
                 </LoaderWrapper>
               }
             >
-              <Result searchedWord={searchedWord} />
+              <Result searchedWord={searchedWord} setSearchedWord={setSearchedWord} />
             </Suspense>
           }
         />

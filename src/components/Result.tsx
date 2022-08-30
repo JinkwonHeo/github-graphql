@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, SetStateAction, Dispatch } from 'react';
 import { useLazyLoadQuery, usePaginationFragment } from 'react-relay';
 import { useNavigate } from 'react-router-dom';
 import { graphql } from 'babel-plugin-relay/macro';
@@ -12,7 +12,13 @@ import styled from 'styled-components';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { Oval } from 'react-loader-spinner';
 
-function Result({ searchedWord }: { searchedWord: string }) {
+function Result({
+  searchedWord,
+  setSearchedWord,
+}: {
+  searchedWord: string;
+  setSearchedWord: Dispatch<SetStateAction<string>>;
+}) {
   const [addStarMutation, isAddStarMutationInFlight] = useAddStarMutation();
   const [removeStarMutation, isRemoveStarMutationInFlight] = useRemoveStarMutation();
   const navigate = useNavigate();
@@ -59,6 +65,10 @@ function Result({ searchedWord }: { searchedWord: string }) {
     `,
     queryData
   );
+
+  useEffect(() => {
+    return () => setSearchedWord('');
+  }, []);
 
   const handleMutationStar = (id: string, hasStarred: boolean) => {
     if (hasStarred) {
