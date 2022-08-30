@@ -91,10 +91,6 @@ function Result({
     navigate(`/`);
   };
 
-  interface IItem {
-    node: INode;
-  }
-
   interface INode {
     id: string;
     name: string;
@@ -113,21 +109,17 @@ function Result({
           <MainPageButton onClick={handleNavigateToMainPage}>처음 화면으로 돌아가기</MainPageButton>
         </ResultHeader>
         <ResultItemContainer>
-          {data.search?.edges.map((item: IItem) => (
-            <Fragment key={item?.node?.id}>
-              <RepositoryTitle>{item?.node?.name}</RepositoryTitle>
-              <RepositoryDescription
-                href={item?.node?.url as string}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {item?.node?.description}
+          {data.search.edges.map(({ node }: { node: INode }) => (
+            <Fragment key={node.id}>
+              <RepositoryTitle>{node.name}</RepositoryTitle>
+              <RepositoryDescription href={node.url as string} target="_blank" rel="noreferrer">
+                {node.description}
               </RepositoryDescription>
               <RepositoryStarButton
                 disabled={isAddStarMutationInFlight || isRemoveStarMutationInFlight}
-                onClick={() => handleMutationStar(item.node.id, item?.node?.viewerHasStarred)}
+                onClick={() => handleMutationStar(node.id, node.viewerHasStarred)}
               >
-                {item?.node?.viewerHasStarred ? (
+                {node.viewerHasStarred ? (
                   <AiFillStar
                     color="yellow"
                     size={17}
@@ -138,7 +130,7 @@ function Result({
                 ) : (
                   <AiOutlineStar size={18} strokeLinejoin="round" />
                 )}
-                {item?.node?.stargazerCount}
+                {node.stargazerCount}
               </RepositoryStarButton>
             </Fragment>
           ))}
