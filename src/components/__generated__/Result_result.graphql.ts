@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b2e814e018eb677c3f6677a0a7d73c24>>
+ * @generated SignedSource<<617bf2f0da68f43925e0a7bb14a2e8fd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type Result_result$data = {
         readonly id?: string;
         readonly name?: string;
         readonly stargazerCount?: number;
+        readonly url?: any;
         readonly viewerHasStarred?: boolean;
       } | null;
     } | null> | null;
@@ -161,6 +162,13 @@ return {
                       "kind": "ScalarField",
                       "name": "viewerHasStarred",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "url",
+                      "storageKey": null
                     }
                   ],
                   "type": "Repository",
@@ -220,6 +228,6 @@ return {
 };
 })();
 
-(node as any).hash = "47e0ff873adcb28e9ae464c3a9fa7198";
+(node as any).hash = "d3f190a6d0357753fd27034a1a7ea709";
 
 export default node;
