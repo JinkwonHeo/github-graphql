@@ -52,6 +52,7 @@ function Result({
                 description
                 stargazerCount
                 viewerHasStarred
+                url
               }
             }
             cursor
@@ -90,6 +91,19 @@ function Result({
     navigate(`/`);
   };
 
+  interface IItem {
+    node: INode;
+  }
+
+  interface INode {
+    id: string;
+    name: string;
+    url: string;
+    description: string;
+    viewerHasStarred: boolean;
+    stargazerCount: number;
+  }
+
   return (
     <>
       <ToTopButton />
@@ -99,10 +113,16 @@ function Result({
           <MainPageButton onClick={handleNavigateToMainPage}>처음 화면으로 돌아가기</MainPageButton>
         </ResultHeader>
         <ResultItemContainer>
-          {data.search?.edges.map((item: any) => (
+          {data.search?.edges.map((item: IItem) => (
             <Fragment key={item?.node?.id}>
               <RepositoryTitle>{item?.node?.name}</RepositoryTitle>
-              <RepositoryDescription>{item?.node?.description}</RepositoryDescription>
+              <RepositoryDescription
+                href={item?.node?.url as string}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {item?.node?.description}
+              </RepositoryDescription>
               <RepositoryStarButton
                 disabled={isAddStarMutationInFlight || isRemoveStarMutationInFlight}
                 onClick={() => handleMutationStar(item.node.id, item?.node?.viewerHasStarred)}
@@ -192,8 +212,14 @@ const RepositoryTitle = styled.div`
   white-space: nowrap;
 `;
 
-const RepositoryDescription = styled.div`
+const RepositoryDescription = styled.a`
+  width: fit-content;
   margin-top: 0.5rem;
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.black};
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const RepositoryStarButton = styled(Button)``;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a793c9a1fbcdc1ce74d263e76d2a991>>
+ * @generated SignedSource<<864eb34796a17ffa4f496c95c932ef8f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -150,6 +150,13 @@ return {
                         "kind": "ScalarField",
                         "name": "viewerHasStarred",
                         "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "url",
+                        "storageKey": null
                       }
                     ],
                     "type": "Repository",
@@ -219,12 +226,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "702b64bc6dfdfc0e16d5e4a87f93a28e",
+    "cacheID": "9253aaef0326745ca819f0fff6310ba0",
     "id": null,
     "metadata": {},
     "name": "ResultQuery",
     "operationKind": "query",
-    "text": "query ResultQuery(\n  $searchedWord: String!\n) {\n  ...Result_result_orFA\n}\n\nfragment Result_result_orFA on Query {\n  search(query: $searchedWord, first: 5, type: REPOSITORY) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          id\n          name\n          description\n          stargazerCount\n          viewerHasStarred\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ResultQuery(\n  $searchedWord: String!\n) {\n  ...Result_result_orFA\n}\n\nfragment Result_result_orFA on Query {\n  search(query: $searchedWord, first: 5, type: REPOSITORY) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          id\n          name\n          description\n          stargazerCount\n          viewerHasStarred\n          url\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dddb504a93fdd1b6ef52ba4b9efc796e>>
+ * @generated SignedSource<<dc610762e8d1e365bbbf546fd3cc10f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -171,6 +171,13 @@ return {
                         "kind": "ScalarField",
                         "name": "viewerHasStarred",
                         "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "url",
+                        "storageKey": null
                       }
                     ],
                     "type": "Repository",
@@ -240,16 +247,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "41aadb537d00c4feb50aaeac1983bf6c",
+    "cacheID": "e27366ca951bece774b2168cdb7f237e",
     "id": null,
     "metadata": {},
     "name": "ResultPaginationQuery",
     "operationKind": "query",
-    "text": "query ResultPaginationQuery(\n  $after: String\n  $first: Int = 5\n  $searchedWord: String!\n) {\n  ...Result_result_1rkBg0\n}\n\nfragment Result_result_1rkBg0 on Query {\n  search(query: $searchedWord, first: $first, after: $after, type: REPOSITORY) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          id\n          name\n          description\n          stargazerCount\n          viewerHasStarred\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ResultPaginationQuery(\n  $after: String\n  $first: Int = 5\n  $searchedWord: String!\n) {\n  ...Result_result_1rkBg0\n}\n\nfragment Result_result_1rkBg0 on Query {\n  search(query: $searchedWord, first: $first, after: $after, type: REPOSITORY) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          id\n          name\n          description\n          stargazerCount\n          viewerHasStarred\n          url\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "47e0ff873adcb28e9ae464c3a9fa7198";
+(node as any).hash = "d3f190a6d0357753fd27034a1a7ea709";
 
 export default node;
