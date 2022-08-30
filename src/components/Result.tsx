@@ -6,7 +6,7 @@ import { graphql } from 'babel-plugin-relay/macro';
 import useAddStarMutation from './hooks/useAddStarMutation';
 import useRemoveStarMutation from './hooks/useRemoveStarMutation';
 
-import ScrollToTop from './ToTopButton';
+import ToTopButton from './ToTopButton';
 import { Button } from './share/Button';
 import styled from 'styled-components';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
@@ -92,7 +92,7 @@ function Result({
 
   return (
     <>
-      <ScrollToTop />
+      <ToTopButton />
       <ResultContainer>
         <ResultHeader>
           <RepositoryTotalCount>Total result: {data.search.repositoryCount}</RepositoryTotalCount>
