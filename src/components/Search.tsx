@@ -1,7 +1,6 @@
-import React, { SetStateAction, Dispatch } from 'react';
+import React, { SetStateAction, Dispatch, useDeferredValue, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { debounce } from 'lodash';
 import githubImage from './assets/github_graphql.png';
 
 function Search({
@@ -12,14 +11,17 @@ function Search({
   setSearchedWord: Dispatch<SetStateAction<string>>;
 }) {
   const navigate = useNavigate();
+  const [input, setInput] = useState('');
+  const deferredSearchedWord = useDeferredValue(input);
 
-  const handleChange = debounce((e: React.BaseSyntheticEvent) => {
-    setSearchedWord(e.target.value);
-  }, 200);
+  const handleChange = (e: React.BaseSyntheticEvent) => {
+    setInput(e.target.value);
+  };
 
   const handleSubmit = (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
-    navigate(`/result/${searchedWord}`);
+    setSearchedWord(deferredSearchedWord);
+    navigate(`/result/${input}`);
   };
 
   return (
@@ -37,7 +39,7 @@ function Search({
               autoCapitalize="off"
             />
           </InputWrapper>
-          <Button disabled={!searchedWord.length}>Search</Button>
+          <Button disabled={!input.length}>Search</Button>
         </SearchForm>
       </Container>
     </>
