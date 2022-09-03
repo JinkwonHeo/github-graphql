@@ -5,6 +5,8 @@ import RelayEnvironment from './config/RelayEnvironment';
 
 import Search from './components/Search';
 import Result from './components/Result';
+import ErrorBoundary from 'components/ErrorBoundary';
+import ErrorUI from 'components/ErrorUI';
 
 import styled, { ThemeProvider } from 'styled-components';
 import { Oval } from 'react-loader-spinner';
@@ -50,11 +52,19 @@ function App() {
 
 function AppRoot() {
   return (
-    <RelayEnvironmentProvider environment={RelayEnvironment}>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </RelayEnvironmentProvider>
+    <ErrorBoundary
+      fallback={({ error, errorInfo }: { error: Error; errorInfo: string }) => (
+        <>
+          <ErrorUI error={error} errorInfo={errorInfo} />
+        </>
+      )}
+    >
+      <RelayEnvironmentProvider environment={RelayEnvironment}>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </RelayEnvironmentProvider>
+    </ErrorBoundary>
   );
 }
 
