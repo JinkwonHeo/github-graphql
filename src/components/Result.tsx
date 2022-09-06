@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, SetStateAction, Dispatch } from 'react';
-import { useLazyLoadQuery, usePaginationFragment } from 'react-relay';
+import { LoadMoreFn, useLazyLoadQuery, usePaginationFragment } from 'react-relay';
 import { useNavigate } from 'react-router-dom';
 import { graphql } from 'babel-plugin-relay/macro';
 
@@ -12,6 +12,10 @@ import styled from 'styled-components';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { Oval } from 'react-loader-spinner';
 
+import { ResultQuery } from './__generated__/ResultQuery.graphql';
+import { ResultPaginationQuery } from './__generated__/ResultPaginationQuery.graphql';
+import { Result_result$key } from './__generated__/Result_result.graphql';
+
 function Result({
   searchedWord,
   setSearchedWord,
@@ -23,7 +27,7 @@ function Result({
   const [removeStarMutation, isRemoveStarMutationInFlight] = useRemoveStarMutation();
   const navigate = useNavigate();
 
-  const queryData: any = useLazyLoadQuery(
+  const queryData = useLazyLoadQuery<ResultQuery>(
     graphql`
       query ResultQuery($searchedWord: String!) {
         ...Result_result @arguments(searchedWord: $searchedWord)
@@ -32,7 +36,10 @@ function Result({
     { searchedWord }
   );
 
-  const { data, loadNext, isLoadingNext } = usePaginationFragment(
+  const { data, loadNext, isLoadingNext } = usePaginationFragment<
+    ResultPaginationQuery,
+    Result_result$key
+  >(
     graphql`
       fragment Result_result on Query
       @argumentDefinitions(
@@ -71,7 +78,7 @@ function Result({
     return () => setSearchedWord('');
   }, []);
 
-  const handleMutationStar = (id: string, hasStarred: boolean) => {
+  const handleMutationStar = (id: string | undefined, hasStarred: boolean | undefined) => {
     if (hasStarred) {
       removeStarMutation({
         variables: {
@@ -91,13 +98,16 @@ function Result({
     navigate(`/`);
   };
 
-  interface INode {
-    id: string;
-    name: string;
-    url: string;
-    description: string;
-    viewerHasStarred: boolean;
-    stargazerCount: number;
+  interface IElement {
+    readonly cursor: string;
+    readonly node: {
+      readonly description?: string | null | undefined;
+      readonly id?: string | undefined;
+      readonly name?: string | undefined;
+      readonly stargazerCount?: number | undefined;
+      readonly url?: string;
+      readonly viewerHasStarred?: boolean | undefined;
+    } | null;
   }
 
   return (
@@ -105,37 +115,45 @@ function Result({
       <ToTopButton />
       <ResultContainer>
         <ResultHeader>
-          <RepositoryTotalCount>Total result: {data.search.repositoryCount}</RepositoryTotalCount>
+          <RepositoryTotalCount>Total result: {data.search?.repositoryCount}</RepositoryTotalCount>
           <MainPageButton onClick={handleNavigateToMainPage}>처음 화면으로 돌아가기</MainPageButton>
         </ResultHeader>
         <ResultItemContainer>
-          {data.search.edges.map(({ node }: { node: INode }) => (
-            <Fragment key={node.id}>
-              <RepositoryTitle>{node.name}</RepositoryTitle>
-              <RepositoryDescription href={node.url as string} target="_blank" rel="noreferrer">
-                {node.description}
-              </RepositoryDescription>
-              <RepositoryStarButton
-                disabled={isAddStarMutationInFlight || isRemoveStarMutationInFlight}
-                onClick={() => handleMutationStar(node.id, node.viewerHasStarred)}
-              >
-                {node.viewerHasStarred ? (
-                  <AiFillStar
-                    color="yellow"
-                    size={17}
-                    stroke="#646464"
-                    strokeWidth={50}
-                    strokeLinejoin="round"
-                  />
-                ) : (
-                  <AiOutlineStar size={18} strokeLinejoin="round" />
-                )}
-                {node.stargazerCount}
-              </RepositoryStarButton>
-            </Fragment>
-          ))}
+          {data.search.edges
+            ? data.search?.edges.map((element: IElement | null) => (
+                <Fragment key={element?.node?.id}>
+                  <RepositoryTitle>{element?.node?.name}</RepositoryTitle>
+                  <RepositoryDescription
+                    href={element?.node?.url as string}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {element?.node?.description}
+                  </RepositoryDescription>
+                  <RepositoryStarButton
+                    disabled={isAddStarMutationInFlight || isRemoveStarMutationInFlight}
+                    onClick={() =>
+                      handleMutationStar(element?.node?.id, element?.node?.viewerHasStarred)
+                    }
+                  >
+                    {element?.node?.viewerHasStarred ? (
+                      <AiFillStar
+                        color="yellow"
+                        size={17}
+                        stroke="#646464"
+                        strokeWidth={50}
+                        strokeLinejoin="round"
+                      />
+                    ) : (
+                      <AiOutlineStar size={18} strokeLinejoin="round" />
+                    )}
+                    {element?.node?.stargazerCount}
+                  </RepositoryStarButton>
+                </Fragment>
+              ))
+            : 'null'}
         </ResultItemContainer>
-        {data.search.pageInfo.hasNextPage ? (
+        {data.search?.pageInfo.hasNextPage ? (
           <>
             {isLoadingNext ? (
               <LoaderWrapper>
